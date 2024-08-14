@@ -11,7 +11,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                sh"git clone git@github.com:sanjaykumarm2001/devops-build.git"
+                sh"cd /devops-build/build/"
             }
         }
 
@@ -32,7 +33,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dckr_pat_VgK0mnalRVjyuznCEUb7NTvvn4o') {
                         docker.image("${DOCKER_REPO}").push()
                     }
                 }
