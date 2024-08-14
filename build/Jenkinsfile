@@ -24,7 +24,7 @@ pipeline {
                         DOCKER_REPO = 'sanjaykumar2001/prod'
                     }
 
-                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}")
+                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}",'build/Dockerfile')
                 }
             }
         }
