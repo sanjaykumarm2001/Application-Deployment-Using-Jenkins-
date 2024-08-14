@@ -18,12 +18,14 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
-                        DOCKER_REPO = 'sanjaykumar2001/dev'
+                        env.DOCKER_REPO = 'sanjaykumar2001/dev'
                     } else if (env.BRANCH_NAME == 'master') {
-                        DOCKER_REPO = 'sanjaykumar2001/prod'
+                        env.DOCKER_REPO = 'sanjaykumar2001/prod'
                     }
 
-                    docker.build("${DOCKER_REPO}")
+                    env.IMAGE_TAG = "${env.BUILD_ID}"
+
+                    docker.build("${env.DOCKER_REPO}:${env.IMAGE_TAG}", ".")
                 }
             }
         }
@@ -32,7 +34,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB_CREDENTIALS') {
-                        docker.image("${DOCKER_REPO}").push()
+                        docker.image("${env.DOCKER_REPO}:${env.IMAGE_TAG}").push()
                     }
                 }
             }
@@ -43,7 +45,7 @@ pipeline {
                 script {
                     sh """
                     kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} \
-                    my-app-container=${DOCKER_REPO} \
+                    my-app-container=${env.DOCKER_REPO}:${env.IMAGE_TAG} \
                     --namespace=${KUBE_NAMESPACE}
                     """
                 }
