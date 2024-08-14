@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REPO = ''
-        IMAGE_TAG = ''
+        DOCKER_REPO = 'sanjaykumar2001'
+        IMAGE_TAG = "${env.BRANCH_NAME}-${env.BUILD_ID}"
         KUBE_DEPLOYMENT_NAME = 'my-deployment'
-        KUBE_NAMESPACE = 'power-ranger'  
+        KUBE_NAMESPACE = 'power-ranger'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/sanjaykumarm2001/devops-build/'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
                         DOCKER_REPO = 'sanjaykumar2001/prod'
                     }
 
-                    docker.build("${DOCKER_REPO}")
+                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}",'build/.')
                 }
             }
         }
@@ -32,8 +32,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        docker.image("${DOCKER_REPO}").push()
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
+                        docker.image("${DOCKER_REPO}:${IMAGE_TAG}").push()
                     }
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
                 script {
                     sh """
                     kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} \
-                    my-app-container=${DOCKER_REPO} \
+                    my-app-container=${DOCKER_REPO}:${IMAGE_TAG} \
                     --namespace=${KUBE_NAMESPACE}
                     """
                 }
