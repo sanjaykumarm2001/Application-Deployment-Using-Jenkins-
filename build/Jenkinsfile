@@ -44,9 +44,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                    kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} \
+                    kubectl set image deployment/${env.KUBE_DEPLOYMENT_NAME} \
                     my-app-container=${env.DOCKER_REPO}:${env.IMAGE_TAG} \
-                    --namespace=${KUBE_NAMESPACE}
+                    --namespace=${env.KUBE_NAMESPACE}
                     """
                 }
             }
