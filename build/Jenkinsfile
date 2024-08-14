@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REPO = 'sanjaykumar2001'
+        DOCKER_REPO = 'sanjaykumar2001
         IMAGE_TAG = "${env.BRANCH_NAME}-${env.BUILD_ID}"
         KUBE_DEPLOYMENT_NAME = 'my-deployment'
         KUBE_NAMESPACE = 'power-ranger'
