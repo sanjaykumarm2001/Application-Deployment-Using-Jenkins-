@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REPO = ''
+        DOCKER_REPO = 'sanjaykumar2001/'
         IMAGE_TAG = ''
         KUBE_DEPLOYMENT_NAME = 'my-deployment'
         KUBE_NAMESPACE = 'power-ranger'  
