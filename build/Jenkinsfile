@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image) {
+        stage('Build Docker Image') {
             steps {
                 script {
                     sh 'docker build -t my-app:${BRANCH_NAME}-${BUILD_NUMBER} .'
