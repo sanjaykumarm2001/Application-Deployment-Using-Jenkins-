@@ -10,7 +10,7 @@ pipeline {
                     echo "Build Number: ${env.BUILD_NUMBER}"
 
                     // Build Docker Image
-                    sh 'docker build -t my-app:${BRANCH_NAME}${BUILD_NUMBER} .'
+                    sh 'docker build -t my-app:${BRANCH_NAME}${BUILD_NUMBER} build/.'
                 }
             }
         }
