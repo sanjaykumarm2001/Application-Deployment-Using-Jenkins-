@@ -11,8 +11,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh"git clone git@github.com:sanjaykumarm2001/devops-build.git"
-                sh"cd /devops-build/build/"
+                sh """
+                git clone git@github.com:sanjaykumarm2001/devops-build.git
+                cd devops-build/build/
+                   
+                   """
             }
         }
 
