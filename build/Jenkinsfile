@@ -10,9 +10,9 @@ pipeline {
         stage('Initialize') {
             steps {
                 script {
-                    // Automatically retrieve the branch name and use 'default-branch' if not available
+                    
                     env.BRANCH_NAME = (env.GIT_BRANCH ?: 'default-branch').replaceAll('/', '-')
-                    // Set the build number to be used globally in the pipeline
+                    
                     env.BUILD_NUMBER = env.BUILD_NUMBER ?: '0'
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
                     echo "Branch Name: ${env.BRANCH_NAME}"
                     echo "Build Number: ${env.BUILD_NUMBER}"
 
-                    // Build the Docker image with the tag including branch name and build number
+                    
                     sh "docker build -t my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} build/."
                 }
             }
@@ -33,10 +33,10 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Docker login with credentials
+                   
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
 
-                    // Push the image based on the branch
+                  
                     if (env.BRANCH_NAME == 'dev') {
                         sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/dev:latest"
                         sh "docker push sanjaykumar2001/dev:latest"
