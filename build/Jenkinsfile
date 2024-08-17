@@ -1,52 +1,27 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_REPO = ''
-        IMAGE_TAG = "${env.BRANCH_NAME}-${env.BUILD_ID}"
-        KUBE_DEPLOYMENT_NAME = 'my-deployment'
-        KUBE_NAMESPACE = 'power-ranger'
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Build Docker Image) {
             steps {
-                git 'https://github.com/sanjaykumarm2001/devops-build/'
+                script {
+                    sh 'docker build -t my-app:${BRANCH_NAME}-${BUILD_NUMBER} .'
+                }
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Push to Docker Hub') {
             steps {
                 script {
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    
                     if (env.BRANCH_NAME == 'dev') {
-                        DOCKER_REPO = 'sanjaykumar2001/dev'
+                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} sanjaykumar2001/dev:latest'
+                        sh 'docker push sanjaykumar2001/dev:latest'
                     } else if (env.BRANCH_NAME == 'master') {
-                        DOCKER_REPO = 'sanjaykumar2001/prod'
+                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} sanjaykumar2001/prod-repo:latest'
+                        sh 'docker push sanjaykumar2001/prod :latest'
                     }
-
-                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}",'build/.')
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB_CREDENTIALS') {
-                        docker.image("${DOCKER_REPO}:${IMAGE_TAG}").push()
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    sh """
-                    kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} \
-                    my-app-container=${DOCKER_REPO}:${IMAGE_TAG} \
-                    --namespace=${KUBE_NAMESPACE}
-                    """
                 }
             }
         }
