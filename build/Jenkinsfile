@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script {
                     // Automatically retrieve the branch name and use 'default-branch' if not available
-                    env.BRANCH_NAME = (env.GIT_BRANCH ?: 'default-branch').replaceAll('/', '-')
+                    env.BRANCH_NAME = (env.GIT_BRANCH ?: 'default-branch').replaceAll('origin/', '')
                     // Set the build number to be used globally in the pipeline
                     env.BUILD_NUMBER = env.BUILD_NUMBER ?: '0'
                 }
@@ -31,13 +31,19 @@ pipeline {
                         // Docker login with credentials
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
 
+                        // Define the image tag based on branch and build number
+                        def imageTag = "my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+
                         // Push the image based on the branch
                         if (env.BRANCH_NAME == 'dev') {
-                            sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/dev:latest"
+                            sh "docker tag ${imageTag} sanjaykumar2001/dev:latest"
                             sh "docker push sanjaykumar2001/dev:latest"
                         } else if (env.BRANCH_NAME == 'master') {
-                            sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/prod-repo:latest"
+                            sh "docker tag ${imageTag} sanjaykumar2001/prod-repo:latest"
                             sh "docker push sanjaykumar2001/prod-repo:latest"
+                        } else {
+                            // Optionally handle other branches
+                            echo "Branch ${env.BRANCH_NAME} is not configured for pushing to Docker Hub."
                         }
                     }
                 }
