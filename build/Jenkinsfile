@@ -25,7 +25,7 @@ pipeline {
                     echo "Build Number: ${env.BUILD_NUMBER}"
 
                     // Build the Docker image with the tag including branch name and build number
-                    sh "docker build -t my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} build/."
+                    sh "docker build -t my-app:${env.BRANCH_NAME}${env.BUILD_NUMBER} build/."
                 }
             }
         }
