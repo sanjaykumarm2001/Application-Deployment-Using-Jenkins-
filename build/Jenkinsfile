@@ -16,11 +16,11 @@ pipeline {
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                     
                     if (env.BRANCH_NAME == 'dev') {
-                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} my-dockerhub-user/dev-repo:latest'
-                        sh 'docker push my-dockerhub-user/dev-repo:latest'
+                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} sanjaykumar2001/dev:latest'
+                        sh 'docker push sanjaykumar2001/dev:latest'
                     } else if (env.BRANCH_NAME == 'master') {
-                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} my-dockerhub-user/prod-repo:latest'
-                        sh 'docker push my-dockerhub-user/prod-repo:latest'
+                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} sanjaykumar2001/prod-repo:latest'
+                        sh 'docker push sanjaykumar2001/prod :latest'
                     }
                 }
             }
