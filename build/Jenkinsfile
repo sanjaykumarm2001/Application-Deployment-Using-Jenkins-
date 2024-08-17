@@ -2,17 +2,16 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USERNAME = 'sanjaykumar2001'
-        DOCKER_PASSWORD = 'Sanjay2001@'
+        // Define other environment variables if needed
     }
 
     stages {
         stage('Initialize') {
             steps {
                 script {
-                    
+                    // Automatically retrieve the branch name and use 'default-branch' if not available
                     env.BRANCH_NAME = (env.GIT_BRANCH ?: 'default-branch').replaceAll('/', '-')
-                    
+                    // Set the build number to be used globally in the pipeline
                     env.BUILD_NUMBER = env.BUILD_NUMBER ?: '0'
                 }
             }
@@ -24,7 +23,7 @@ pipeline {
                     echo "Branch Name: ${env.BRANCH_NAME}"
                     echo "Build Number: ${env.BUILD_NUMBER}"
 
-                    
+                    // Build the Docker image with the tag including branch name and build number
                     sh "docker build -t my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} build/."
                 }
             }
@@ -32,17 +31,19 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                script {
-                   
-                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    script {
+                        // Docker login with credentials
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
 
-                  
-                    if (env.BRANCH_NAME == 'dev') {
-                        sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/dev:latest"
-                        sh "docker push sanjaykumar2001/dev:latest"
-                    } else if (env.BRANCH_NAME == 'master') {
-                        sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/prod-repo:latest"
-                        sh "docker push sanjaykumar2001/prod-repo:latest"
+                        // Push the image based on the branch
+                        if (env.BRANCH_NAME == 'dev') {
+                            sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/dev:latest"
+                            sh "docker push sanjaykumar2001/dev:latest"
+                        } else if (env.BRANCH_NAME == 'master') {
+                            sh "docker tag my-app:${env.BRANCH_NAME}-${env.BUILD_NUMBER} sanjaykumar2001/prod-repo:latest"
+                            sh "docker push sanjaykumar2001/prod-repo:latest"
+                        }
                     }
                 }
             }
