@@ -11,7 +11,7 @@ pipeline {
                     echo "Branch Name: ${branchName}"
                     echo "Build Number: ${buildNumber}"
 
-                    sh "docker build -t my-app:${branchName}-${buildNumber} ."
+                    sh "docker build -t my-app:${branchName}-${buildNumber} build/."
                 }
             }
         }
