@@ -13,13 +13,11 @@ pipeline {
             steps {
 <<<<<<< HEAD
                 sh """
-                git clone git@github.com:sanjaykumarm2001/devops-build.git
-                cd devops-build/build/
-                   
+             
                    """
 =======
-                git 'https://github.com/sanjaykumarm2001/devops-build/'
->>>>>>> 548dfb961acb2905e75d6412cc05751b6d9f04f7
+             
+>>>>>>> 
             }
         }
 
@@ -40,13 +38,12 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-<<<<<<< HEAD
-                    docker.withRegistry('https://registry.hub.docker.com', 'dckr_pat_VgK0mnalRVjyuznCEUb7NTvvn4o') {
+<<<<<<< HEAD                    docker.withRegistry('https://registry.hub.docker.com', '') {
                         docker.image("${DOCKER_REPO}").push()
 =======
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB_CREDENTIALS') {
                         docker.image("${DOCKER_REPO}:${IMAGE_TAG}").push()
->>>>>>> 548dfb961acb2905e75d6412cc05751b6d9f04f7
+
                     }
                 }
             }
