@@ -1,6 +1,35 @@
 pipeline {
     agent any
 
-    envir
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t my-app:${BRANCH_NAME}-${BUILD_NUMBER} .'
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    
+                    if (env.BRANCH_NAME == 'dev') {
+                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} my-dockerhub-user/dev-repo:latest'
+                        sh 'docker push my-dockerhub-user/dev-repo:latest'
+                    } else if (env.BRANCH_NAME == 'master') {
+                        sh 'docker tag my-app:${BRANCH_NAME}-${BUILD_NUMBER} my-dockerhub-user/prod-repo:latest'
+                        sh 'docker push my-dockerhub-user/prod-repo:latest'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
