@@ -80,9 +80,4 @@
 ## Troubleshooting
     *Docker Image Not Building: Ensure the Dockerfile is correct and all required files are present.
     *Jenkins Build Failing: Check the Jenkins logs for errors and ensure credentials are properly configured
-=======
-   To automate the process of building a Docker image and pushing it to Docker Hub based on code pushed to a specific branch, created two shell scripts: build.sh and deploy.sh.
-     #### build.sh 
-     ![build sh](https://github.com/user-attachments/assets/2a13dec3-b958-4d32-acb1-9d91dfa3744c)
 
->>>>>>> 58e1434bae2191a4aab308dfe8a8aac1cde13ca5
