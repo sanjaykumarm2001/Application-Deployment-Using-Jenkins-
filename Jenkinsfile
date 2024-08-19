@@ -10,8 +10,8 @@ pipeline {
                         sh 'ls -la build'
 
                         // Use relative path to deploy.sh and ensure it's executable
-                        sh 'chmod +x build/deploy.sh'
-                        sh '.deploy.sh'
+                        sh 'chmod +x deploy.sh'
+                        sh './deploy.sh'
                     }
                 }
             }
