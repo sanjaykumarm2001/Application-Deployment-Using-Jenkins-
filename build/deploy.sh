@@ -11,6 +11,7 @@ if [[ $GIT_BRANCH == "origin/dev" ]]; then
 elif [[ $GIT_BRANCH == "origin/master" ]]; then
     chmod +x build/build.sh
     build/build.sh
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     docker tag react-app sanjaykumar2001/prod-repo
     docker push sanjaykumar2001/prod-repo
 
