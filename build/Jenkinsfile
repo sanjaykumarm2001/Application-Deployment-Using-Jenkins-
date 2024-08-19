@@ -6,17 +6,26 @@ pipeline {
         githubPush()
     }
 
+    environment {
+        DOCKER_IMAGE_NAME = 'react-app'
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    // Checkout code from the branch that triggered the build
-                    echo "Checking out branch: ${env.BRANCH_NAME}"
-                    git url: 'https://github.com/sanjaykumarm2001/devops-build/', branch: env.BRANCH_NAME
+                    // Print branch name for debugging
+                    echo "Branch Name: ${env.BRANCH_NAME}"
+                    
+                    // If BRANCH_NAME is null or empty, fallback to 'main'
+                    def branchName = env.BRANCH_NAME ?: 'main'
+                    
+                    // Checkout the code from the branch that triggered the build
+                    echo "Checking out branch: ${branchName}"
+                    git url: 'https://github.com/sanjaykumarm2001/devops-build', branch: branchName
                 }
             }
         }
-
 
         stage('Build and Deploy Docker Image') {
             steps {
