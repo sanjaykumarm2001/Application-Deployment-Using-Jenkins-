@@ -55,6 +55,8 @@
     4.Deploy: Deploy the Docker container to the desired environment.
 ## Monitoring
     Monitoring of an application is done through cloud watch and uses metrices of an instance to send an alarm through Simple Notification Service to the subscribers.
+### Elastic IP 
+    used Elastic Ip to access the application 
 
  ![sns](https://github.com/user-attachments/assets/50f59794-fe1d-401d-9af4-dcf80d494682)
 ## Folder Structure
