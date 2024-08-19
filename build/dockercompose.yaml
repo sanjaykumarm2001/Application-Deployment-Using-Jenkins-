@@ -3,7 +3,7 @@ version: '3.8'
 services:
   react-app:
     build:
-      context: .  
+      context: build/.  
     
     ports:
       - "80:80"  
