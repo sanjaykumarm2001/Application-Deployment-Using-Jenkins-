@@ -9,9 +9,9 @@ pipeline {
                         // List files in the build directory to confirm location
                         sh 'ls -la build'
 
-                        // Use absolute path to deploy.sh
-                        sh "chmod +x ${env.WORKSPACE}/build/deploy.sh"
-                        sh "${env.WORKSPACE}/build/deploy.sh"
+                        // Use quoted path to handle spaces
+                        sh 'chmod +x "build/deploy.sh"'
+                        sh '"./build/deploy.sh"'
                     }
                 }
             }
