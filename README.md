@@ -10,7 +10,7 @@
     *Docker Setup
     *Jenkins Setup
     *Folder Structure
-    *Monitoring
+    *Monitoring and deploying using Elastic IP
     *Usage
     *Troubleshooting
 ## Prerequisites
@@ -53,8 +53,12 @@
     2.Build Docker Image: Build the Docker image using the Dockerfile.
     3.Push Docker Image: Push the Docker image to Docker Hub or another registry.
     4.Deploy: Deploy the Docker container to the desired environment.
-## Monitoring
+## Monitoring and deploying using Elastic IP
     Monitoring of an application is done through cloud watch and uses metrices of an instance to send an alarm through Simple Notification Service to the subscribers.
+### Elastic IP 
+    Used Elastic IP to access the application in common 
+![Elastic ip](https://github.com/user-attachments/assets/c791d744-c943-495e-92cc-e53792afa3d9)
+
 
  ![sns](https://github.com/user-attachments/assets/50f59794-fe1d-401d-9af4-dcf80d494682)
 ## Folder Structure
