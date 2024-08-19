@@ -10,7 +10,7 @@ pipeline {
                 sh 'chmod +x deploy.sh'
 
                 // Build the Docker image using the build script
-                sh 'build/deploy.sh'
+                sh '/build/deploy.sh'
 
                 }} 
             }
