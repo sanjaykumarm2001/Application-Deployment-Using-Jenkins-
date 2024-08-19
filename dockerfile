@@ -2,7 +2,7 @@
 FROM nginx:latest
 
 # Copy all files from the current directory to the nginx html directory
-COPY . /var/www/html/
+COPY build/ /var/www/html/
 
 # Verify that files were copied by listing the contents of the target directory
 RUN ls -la /var/www/html/
