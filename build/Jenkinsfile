@@ -7,7 +7,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
                     script{
                         sh'ls -la'
-                        sh 'cd build'
+                        sh 'cd /build'
                 // Grant executable permissions to the build script
                 sh 'chmod +x deploy.sh'
 
