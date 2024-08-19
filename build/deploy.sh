@@ -1,3 +1,12 @@
 #!bin/bash
-sudo su 
-docker run -d sanjaykumar2001
+if [[GIT.BRANCH == "origin/dev" ]];then
+    sh "chmod +x build.sh"
+    sh "./build.sh"
+    docker tag react-app sanjaykumar2001/dev
+    docker push sanjaykumar2001/dev
+
+elif[[GIT.BRANCH=="origin/master"]];then
+    sh "chmod +x build.sh"
+    sh "./build.sh"
+    docker tag react-app sanjaykumar2001/prod-repo
+    docker push sanjaykumar2001/prod-repo

@@ -1,3 +1,2 @@
 #!bin/bash
-sudo su 
-docker build -t sanjaykumar2001/dev  .
+docker build -t react-app  .
