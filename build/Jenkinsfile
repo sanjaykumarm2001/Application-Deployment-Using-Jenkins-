@@ -11,7 +11,7 @@ pipeline {
 
                         // Use quoted path to handle spaces
                         sh 'chmod +x "build/deploy.sh"'
-                        sh '"./build/deploy.sh"'
+                        sh '"/build/deploy.sh"'
                     }
                 }
             }
