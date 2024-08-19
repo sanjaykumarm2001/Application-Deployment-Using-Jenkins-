@@ -1,0 +1,7 @@
+#manifest files
+manifest.json
+favicon.ico
+assest-manifest.json
+
+# Docker-related files
+.dockerignore
