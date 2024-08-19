@@ -36,4 +36,4 @@ Before you begin, ensure you have the following installed:
 
    To automate the process of building a Docker image and pushing it to Docker Hub based on code pushed to a specific branch, created two shell scripts: build.sh and deploy.sh.
      #### build.sh 
-      ![image alt]()
+      ![image alt](build/Screenshot/build.sh.jpg)
