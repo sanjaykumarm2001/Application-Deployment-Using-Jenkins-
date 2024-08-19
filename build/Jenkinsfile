@@ -7,12 +7,11 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
                     script{
                         sh'ls -la'
-                        sh 'cd /build'
                 // Grant executable permissions to the build script
-                sh 'chmod +x deploy.sh'
+                sh 'chmod +x /build/deploy.sh'
 
                 // Build the Docker image using the build script
-                sh './deploy.sh'
+                sh './build/deploy.sh'
 
                 }} 
             }
