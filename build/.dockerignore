@@ -1,0 +1,6 @@
+# Ignore Jenkins pipeline configuration
+Jenkinsfile
+
+# Ignore Docker Compose file
+dockercompose.yaml
+
