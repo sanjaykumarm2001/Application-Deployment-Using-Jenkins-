@@ -12,3 +12,4 @@ EXPOSE 80
 
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
+###
