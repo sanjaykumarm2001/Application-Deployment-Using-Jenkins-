@@ -1,43 +1,18 @@
 pipeline {
     agent any
 
-    triggers {
-        // Automatically trigger builds on GitHub push events
-        githubPush()
-    }
-
-    environment {
-        DOCKER_IMAGE_NAME = 'react-app'
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Build and Push Docker Image') {
             steps {
-                script {
-                    // Print branch name for debugging
-                    echo "Branch Name: ${env.BRANCH_NAME}"
-                    
-                    // If BRANCH_NAME is null or empty, fallback to 'main'
-                    def branchName = env.BRANCH_NAME ?: 'main'
-                    
-                    // Checkout the code from the branch that triggered the build
-                    echo "Checking out branch: ${branchName}"
-                    git url: 'https://github.com/sanjaykumarm2001/devops-build', branch: branchName
-                }
+                // Grant executable permissions to the build script
+                sh 'chmod +x deploy.sh'
+
+                // Build the Docker image using the build script
+                sh './deploy.sh'
+
+                
             }
         }
 
-        stage('Build and Deploy Docker Image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    script {
-                        // Ensure deploy.sh is executable and run it
-                        echo "Deploying Docker image..."
-                        sh 'chmod +x build/deploy.sh'
-                        sh './build/deploy.sh'
-                    }
-                }
-            }
-        }
     }
 }
