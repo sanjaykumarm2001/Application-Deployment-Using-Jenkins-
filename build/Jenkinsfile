@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    triggers {
+        // Automatically trigger builds on GitHub push events
+        githubPush()
+    }
+
     stages {
         stage('Build and Push Docker Image') {
             steps {
@@ -18,4 +23,3 @@ pipeline {
         }
     }
 }
-
