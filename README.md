@@ -27,7 +27,6 @@
 
     2. Build the Docker Image
 
-<<<<<<< HEAD
     To automate the process of building a Docker image and pushing it to Docker Hub based on code pushed to a specific branch, created two shell scripts: build.sh and deploy.sh.
    #### build.sh 
  ![build sh](https://github.com/user-attachments/assets/2a13dec3-b958-4d32-acb1-9d91dfa3744c)
@@ -37,7 +36,6 @@
  ![deploy sh](https://github.com/user-attachments/assets/fe721458-1b03-443a-a420-e8dd574cef36)
 
 
-     
 
 ## Docker Setup
 ### The Dockerfile in this project is configured to:
